@@ -13,9 +13,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.set('view engine', '.hbs');
-app.engine('.hbs', expressHbs({
-    defaultLayout:false
-}));
+app.engine('.hbs', expressHbs({ defaultLayout:false }));
 app.set('views', path.join(__dirname, 'static'));
 
 app.get('/', function (req, res) {
@@ -24,6 +22,7 @@ app.get('/', function (req, res) {
 
 app.get('/users', async (req, res) => {
     const users = await fs.readFile(usersPath);
+
     res.render('users', {users: JSON.parse(users)});
 });
 
@@ -32,21 +31,26 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    const users = await fs.readFile(usersPath);
     const { email, password } = req.body;
+    const users = await fs.readFile(usersPath);
+
     const foundUser = JSON.parse(users).find(user => user.email === email && user.password === password);
+
     if (!foundUser) {
         error = 'please register';
         res.redirect('/error');
         return;
     }
+
     res.redirect(`/users/${foundUser.id}`);
 });
 
 app.get('/users/:userId', async (req, res) => {
     const { userId } = req.params;
+
     const users = await fs.readFile(usersPath);
     const foundUser = JSON.parse(users).find(user => user.id === +userId);
+
     res.render('user', foundUser );
 })
 
@@ -60,13 +64,14 @@ app.get('/registration', (req, res) => {
 
 app.post('/registration', async (req, res) => {
     const users = await fs.readFile(usersPath);
-    const  userData  = req.body;
     const allUsers = JSON.parse(users);
-    allUsers.push( {...userData, id: allUsers.length + 1});
-    await fs.writeFile(usersPath,JSON.stringify(allUsers))
+
+    allUsers.push({...req.body, id: allUsers.length + 1});
+    await fs.writeFile(usersPath,JSON.stringify(allUsers));
+
     res.redirect(`/login`);
 });
 
 app.listen(3000,() => {
     console.log('localhost 3000');
-})
+});
