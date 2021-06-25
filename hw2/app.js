@@ -35,6 +35,7 @@ app.post('/login', async (req, res) => {
     const users = await fs.readFile(usersPath);
     const { email, password } = req.body;
     const foundUser = JSON.parse(users).find(user => user.email === email && user.password === password);
+
     if (!foundUser) {
         error = 'please register';
         res.redirect('/error');
@@ -47,6 +48,7 @@ app.get('/users/:userId', async (req, res) => {
     const { userId } = req.params;
     const users = await fs.readFile(usersPath);
     const foundUser = JSON.parse(users).find(user => user.id === +userId);
+
     res.render('user', foundUser );
 })
 
@@ -62,8 +64,14 @@ app.post('/registration', async (req, res) => {
     const users = await fs.readFile(usersPath);
     const  userData  = req.body;
     const allUsers = JSON.parse(users);
+    const existUser = allUsers.find(user => user.email===userData.email);
+
+    if (existUser){
+        res.json('this email already exist');
+    }
     allUsers.push( {...userData, id: allUsers.length + 1});
-    await fs.writeFile(usersPath,JSON.stringify(allUsers))
+
+    await fs.writeFile(usersPath,JSON.stringify(allUsers));
     res.redirect(`/login`);
 });
 
