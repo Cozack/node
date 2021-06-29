@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Oleg",
+    "email": "oleg@gmail.com",
+    "password": "111",
+    "id": 1
+  },
+  {
+    "name": "Stepan",
+    "email": "stepan@gmail.com",
+    "password": "111",
+    "id": 2
+  },
+  {
+    "name": "Mila",
+    "email": "mila@gmail.com",
+    "password": "111",
+    "id": 3
+  },
+  {
+    "name": "ira",
+    "email": "ggg@hh.com",
+    "password": "111",
+    "id": 4
+  },
+  {
+    "name": "ira",
+    "email": "ggg@hh.com",
+    "password": "111",
+    "id": 5
+  },
+  {
+    "name": "taras",
+    "email": "ggg@hh.com",
+    "password": "111",
+    "id": 6
+  },
+  {
+    "name": "marina",
+    "email": "marina@mail.ru",
+    "password": "123",
+    "id": 7
+  },
+  {
+    "name": "luda",
+    "email": "luda@mail.ru",
+    "password": "123",
+    "id": 8
+  },
+  {
+    "name": "vitya",
+    "email": "vitya@gmail.com",
+    "password": "123",
+    "id": 9
+  },
+  {
+    "name": "kolya",
+    "email": "kolya@mail.ru",
+    "password": "123",
+    "id": 10
+  },
+  {
+    "name": "solomiya",
+    "email": "solomiya@mail.ru",
+    "password": "123",
+    "id": 11
+  },
+  {
+    "name": "valera",
+    "email": "kolya@mail.ru",
+    "password": "321",
+    "id": 12
+  },
+  {
+    "name": "stepan",
+    "email": "stepan@mail.ru",
+    "password": "123",
+    "id": 13
+  },
+  {
+    "name": "stepan",
+    "email": "stepan@gmail.ru",
+    "password": "321",
+    "id": 14
+  },
+  {
+    "name": "stepan",
+    "email": "stepan@gmail.ru",
+    "password": "123",
+    "id": 15
+  }
+]
