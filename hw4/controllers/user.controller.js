@@ -32,7 +32,7 @@ module.exports = {
 
             await User.findByIdAndUpdate({ _id: userId }, req.body);
 
-            res.json(`User ${userId} updated`);
+            res.status(responseCodes.UPDATED).json(`User ${userId} updated`);
         } catch (e) {
             next(e);
         }
@@ -44,7 +44,7 @@ module.exports = {
 
             await User.findByIdAndDelete({ _id: userId });
 
-            res.json(`user ${userId} deleted`);
+            res.status(responseCodes.DELETED).json(`user ${userId} deleted`);
         } catch (e) {
             next(e);
         }
