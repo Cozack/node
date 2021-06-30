@@ -22,7 +22,7 @@ function _handleErrors(err, req, res, next) {
     res
         .status(err.status)
         .json({
-            message: err.message || error.UNKNOWN_ERROR,
+            message: err.message || error.NOT_FOUND,
             customCode: err.code || 0
         });
 }
@@ -30,7 +30,7 @@ function _handleErrors(err, req, res, next) {
 function _notFoundHandler(err, req, res, next) {
     next({
         status: err.status || responseCode.NOT_FOUND,
-        message: err.message || error.UNKNOWN_ERROR
+        message: err.message || error.NOT_FOUND
     });
 }
 

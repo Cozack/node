@@ -10,7 +10,8 @@ module.exports = {
             const userById = await User.findById(userId);
 
             if (!userById) {
-                throw new ErrorHandler(responseCode.NOT_FOUND, errorMessages.USER_NOT_FOUND, 4041);
+                // eslint-disable-next-line max-len
+                throw new ErrorHandler(responseCode.NOT_FOUND, errorMessages.USER_NOT_FOUND.message, errorMessages.USER_NOT_FOUND.code);
             }
 
             req.user = userById;
@@ -22,10 +23,11 @@ module.exports = {
 
     isUserRegistered: async (req, res, next) => {
         try {
-            const findUser = await User.find((user) => user.email === req.body.email);
+            const findUser = await User.findOne({ email: req.body.email });
 
             if (findUser) {
-                throw new ErrorHandler(responseCode.USER_ALREADY_EXIST, errorMessages.USER_ALREADY_EXIST, 4090);
+                // eslint-disable-next-line max-len
+                throw new ErrorHandler(responseCode.USER_ALREADY_EXIST, errorMessages.USER_ALREADY_EXIST.message, errorMessages.USER_ALREADY_EXIST.code);
             }
 
             next();
