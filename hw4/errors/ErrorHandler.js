@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class ErrorHandler extends Error {
     constructor(status, message, customCode) {
         super(message);
@@ -10,3 +11,17 @@ class ErrorHandler extends Error {
 }
 
 module.exports = ErrorHandler;
+=======
+class ErrorHandler extends Error {
+    constructor(status, message, customCode) {
+        super(message);
+        this.message = message;
+        this.status = status;
+        this.code = customCode;
+
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+
+module.exports = ErrorHandler;
+>>>>>>> a79e968 (hw 4)
