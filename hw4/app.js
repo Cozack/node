@@ -22,7 +22,7 @@ function _handleErrors(err, req, res, next) {
     res
         .status(err.status)
         .json({
-            message: err.message || error.UNKNOWN_ERROR,
+            message: err.message || error.NOT_FOUND,
             customCode: err.code || 0
         });
 }
