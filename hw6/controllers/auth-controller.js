@@ -1,6 +1,6 @@
 const { OAuth } = require('../dataBase/models');
 const { authService } = require('../services');
-const { AUTHORIZATION } = require('../constants/configuration');
+const { configuration, responseCodes } = require('../constants');
 
 module.exports = {
     login: async (req, res, next) => {
@@ -25,10 +25,10 @@ module.exports = {
 
     logout: async (req, res, next) => {
         try {
-            const token = req.get(AUTHORIZATION);
+            const token = req.get(configuration.AUTHORIZATION);
 
             await OAuth.remove({ accessToken: token });
-            res.sendStatus(204);
+            res.sendStatus(responseCodes.DELETED);
         } catch (e) {
             next(e);
         }
@@ -37,7 +37,7 @@ module.exports = {
     refresh: async (req, res, next) => {
         try {
             const { _id } = req.user;
-            const token = req.get(AUTHORIZATION);
+            const token = req.get(configuration.AUTHORIZATION);
 
             const tokenPair = authService.generateTokenPair();
 
