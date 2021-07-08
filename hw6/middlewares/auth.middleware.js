@@ -1,12 +1,12 @@
 const authValidator = require('../validators/auth/auth.validator');
 const { errorMessages, ErrorHandler } = require('../errors');
 const responseCode = require('../constants/response-codes');
-const { AUTHORIZATION, TOKEN_TYPE_REFRESH } = require('../constants/configuration');
+const { AUTHORIZATION, REFRESH_TOKEN_TYPE } = require('../constants/configuration');
 const { authService } = require('../services');
 const { OAuth } = require('../dataBase/models');
 
 module.exports = {
-    checkUserCredentialsValid: (req, res, next) => {
+    checkUserBody: (req, res, next) => {
         try {
             const { error } = authValidator.loginUser.validate(req.body);
 
@@ -63,7 +63,7 @@ module.exports = {
                 );
             }
 
-            await authService.verifyToken(token, TOKEN_TYPE_REFRESH);
+            await authService.verifyToken(token, REFRESH_TOKEN_TYPE);
 
             const tokenObject = await OAuth.findOne({ refreshToken: token });
 

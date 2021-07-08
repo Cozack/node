@@ -1,45 +1,11 @@
-const { User, OAuth } = require('../dataBase/models');
-const { passwordHasherService, authService } = require('../services');
-const { errorMessages, ErrorHandler } = require('../errors');
-const responseCode = require('../constants/response-codes');
+const { OAuth } = require('../dataBase/models');
+const { authService } = require('../services');
 const { AUTHORIZATION } = require('../constants/configuration');
 
 module.exports = {
-    isEmailOrPasswordWrong: async (req, res) => {
-        try {
-            const { password, email } = req.body;
-
-            const userByEmail = await User.findOne({ email }).select('+password');
-
-            if (!userByEmail) {
-                throw new ErrorHandler(
-                    responseCode.NOT_FOUND,
-                    errorMessages.WRONG_EMAIL_OR_PASSWORD.message,
-                    errorMessages.WRONG_EMAIL_OR_PASSWORD.code
-                );
-            }
-            await passwordHasherService.compare(userByEmail.password, password);
-
-            res.json(userByEmail);
-        } catch (e) {
-            res.json(e.message);
-        }
-    },
-
     login: async (req, res, next) => {
         try {
-            if (!req.user) {
-                throw new ErrorHandler(
-                    responseCode.NOT_FOUND,
-                    errorMessages.WRONG_EMAIL_OR_PASSWORD.message,
-                    errorMessages.WRONG_EMAIL_OR_PASSWORD.code
-                );
-            }
-
-            const { password: hashPassword, _id } = req.user;
-            const { password } = req.body;
-
-            await passwordHasherService.compare(hashPassword, password);
+            const { _id } = req.user;
 
             const tokenPair = authService.generateTokenPair();
 

@@ -5,5 +5,8 @@ module.exports = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET || 'Secret',
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || 'Refresh Secret',
     AUTHORIZATION: 'Authorization',
-    TOKEN_TYPE_REFRESH: 'refresh'
+    ACCESS_TOKEN_TYPE: 'access',
+    REFRESH_TOKEN_TYPE: 'refresh',
+    ACCESS_TOKEN_EXPIRES_TIME: '10m',
+    REFRESH_TOKEN_EXPIRES_TIME: '15d'
 };

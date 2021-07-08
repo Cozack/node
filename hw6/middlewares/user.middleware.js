@@ -1,6 +1,7 @@
 const { User } = require('../dataBase/models');
 const { errorMessages, ErrorHandler } = require('../errors');
 const responseCode = require('../constants/response-codes');
+const { passwordHasherService } = require('../services');
 
 module.exports = {
     IsUserExist: async (req, res, next) => {
@@ -65,6 +66,27 @@ module.exports = {
 
                 throw new ErrorHandler(responseCode.BAD_REQUEST, message, errorMessages.BAD_REQUEST.code);
             }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUserPasswordValidity: async (req, res, next) => {
+        try {
+            if (!req.user) {
+                throw new ErrorHandler(
+                    responseCode.NOT_FOUND,
+                    errorMessages.WRONG_EMAIL_OR_PASSWORD.message,
+                    errorMessages.WRONG_EMAIL_OR_PASSWORD.code
+                );
+            }
+
+            const { password: hashPassword } = req.user;
+            const { password } = req.body;
+
+            await passwordHasherService.compare(hashPassword, password);
 
             next();
         } catch (e) {
