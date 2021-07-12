@@ -33,17 +33,19 @@ const sendMail = async (userMail, action, context = {}) => {
     }
 
     const html = await templateParser.render(templateToSend.templateName, context);
-    console.log(templateToSend.imageName);
     return transporter.sendMail({
         from: 'No reply',
         to: userMail,
         subject: templateToSend.subject,
         html,
         attachments: [{
-            filename: templateToSend.imageName,
-            path: path.join(process.cwd(), 'public', templateToSend.imageName),
-            cid: templateToSend.imageName
+            ...(templateToSend.imageName && {
+                filename: templateToSend.imageName,
+                path: path.join(process.cwd(), 'public', templateToSend.imageName),
+                cid: templateToSend.imageName
+            })
         }]
+
     });
 };
 
