@@ -6,7 +6,8 @@ const {
     FILE_MAX_SIZE,
     VIDEO_MAX_SIZE
 } = require('../constants/configuration');
-
+const { ErrorHandler } = require('../errors');
+const { responseCodes, errors } = require('../constants');
 
 module.exports = {
     checkFiles: (req, res, next) => {
@@ -37,7 +38,7 @@ module.exports = {
                     }
                     documents.push(files[i]);
                 } else {
-                    throw new Error('Wrong file format');
+                    throw new ErrorHandler(responseCodes.NO_CONTENT, errors.WRONG_FILE_FORMAT);
                 }
             }
 
@@ -54,7 +55,7 @@ module.exports = {
     checkAvatar: (req, res, next) => {
         try {
             if (req.photos.length > 1) {
-                throw new Error('Just one avatar per user');
+                throw new ErrorHandler(responseCodes.WRONG_TEMPLATE, errors.TO_MUCH_AVATARS);
             }
 
             [req.avatar] = req.photos;

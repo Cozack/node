@@ -31,7 +31,7 @@ module.exports = {
                 const { finalPath, photoPath } = await _photoDirBuilder(avatar.name, _id, itemTypes.USERS, itemTypes.AVATAR);
                 await avatar.mv(finalPath);
 
-                await User.updateOne({ _id }, { avatar: photoPath });
+                await User.updateOne({ _id }, { avatars: [{ path: photoPath }] });
             }
 
             const normalizedUser = userHelper.userNormalizator(createdUser.toJSON());
@@ -78,14 +78,21 @@ module.exports = {
 
     addNewImages: async (req, res, next) => {
         try {
-            const [image] = req.photos;
+            const images = req.photos;
             const { _id } = req.user;
 
-            if (image) {
-                const { finalPath, photoPath } = await _photoDirBuilder(image.name, _id, itemTypes.USERS, itemTypes.IMAGES);
-                await image.mv(finalPath);
+            const newAvatars = [];
 
-                await User.findByIdAndUpdate({ _id }, { $push: { images: photoPath } });
+            if (images.length) {
+                for await (const image of images) {
+                    const { finalPath, photoPath } = await _photoDirBuilder(image.name, _id, itemTypes.USERS, itemTypes.IMAGES);
+
+                    await image.mv(finalPath);
+
+                    newAvatars.push({ path: photoPath });
+                }
+
+                await User.updateOne({ _id }, { $push: { avatars: { $each: newAvatars } } });
             }
             res.status(responseCodes.UPDATED).json('user updated');
         } catch (e) {

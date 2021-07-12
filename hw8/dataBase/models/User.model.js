@@ -2,14 +2,16 @@ const { Schema, model } = require('mongoose');
 
 const { userRoles, dataBaseTableEnum } = require('../../constants');
 
+const avatarSchema = new Schema({
+    path: String
+}, { timestamps: true });
+
 const userSchema = new Schema({
-    avatar: {
-        type: String
-    },
     name: {
         type: String,
         required: true
     },
+    avatars: [avatarSchema],
     email: {
         type: String,
         unique: true,
