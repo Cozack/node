@@ -6,12 +6,7 @@ const { sequelize } = require('../dataBase/MySQL');
 module.exports = {
     findAllUser: async (req, res, next) => {
         try {
-            const { name } = req.query;
-            const users = await UserModel.findAll({
-                where: {
-                    name
-                }
-            });
+            const users = await UserModel.findAll({});
 
             res.json(users);
         } catch (e) {
@@ -21,11 +16,11 @@ module.exports = {
 
     updateUser: async (req, res, next) => {
         try {
-            const { userId } = req.params;
+            const { id } = req.params;
 
             await UserModel.update(req.body, {
                 where: {
-                    id: userId
+                    id
                 }
             });
 
@@ -37,11 +32,12 @@ module.exports = {
 
     deleteUser: async (req, res, next) => {
         try {
-            const { userId } = req.params;
+            const { id } = req.params;
+            console.log(req.params);
 
             await UserModel.destroy({
                 where: {
-                    id: userId
+                    id
                 }
             });
 
@@ -53,9 +49,9 @@ module.exports = {
 
     findOne: async (req, res, next) => {
         try {
-            const { userId } = req.params;
+            const { id } = req.params;
 
-            const user = await UserModel.findByPk(userId);
+            const user = await UserModel.findByPk(id);
 
             res.json(user);
         } catch (e) {
@@ -67,9 +63,9 @@ module.exports = {
         const transaction = await sequelize.transaction();
 
         try {
-            const { id } = await UserModel.create(req.body, { transaction });
+            const { id, name } = await UserModel.create(req.body, { transaction });
 
-            await UserModel.update({ name: 'max' }, {
+            await UserModel.update({ name }, {
                 where: { id },
                 transaction
             });

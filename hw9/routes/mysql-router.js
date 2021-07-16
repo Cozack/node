@@ -4,8 +4,8 @@ const { mysqlController } = require('../controllers');
 
 router.get('/', mysqlController.findAllUser);
 router.post('/', mysqlController.create);
-router.get('/',);
-router.get('/',);
-router.delete('/userId', mysqlController.deleteUser);
+router.get('/:id', mysqlController.findOne);
+router.put('/:id',mysqlController.updateUser);
+router.delete('/:id', mysqlController.deleteUser);
 
 module.exports = router;
