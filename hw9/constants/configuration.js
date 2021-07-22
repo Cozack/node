@@ -1,7 +1,7 @@
 module.exports = {
     PORT: process.env.PORT || 3000,
     DB_LOCAL_HOST: 'localhost 3000',
-    DB_CONNECTION_URL: process.env.DB_CONNECTION_URL || 'mongodb+srv://test_database:admin@claster.x6oyq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    DB_CONNECTION_URL: process.env.DB_CONNECTION_URL || 'mongoDB',
     DB_USER_NAME: process.env.DB_USER_NAME || 'user',
     DB_USER_PASSWORD: process.env.DB_USER_PASSWORD || 'user',
     DB_MYSQL_NAME: 'feb-2021',
